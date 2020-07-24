@@ -10,9 +10,9 @@ export default {
     if (MessageBus.baseUrl !== "/") {
       MessageBus.ajax = function(opts) {
         opts.headers = opts.headers || {};
-        opts.headers["X-Shared-Session-Key"] = Em.$(
+        opts.headers["X-Shared-Session-Key"] = document.querySelector(
           "meta[name=shared_session_key]"
-        ).attr("content");
+        ).getAttribute("content");
         return Em.$.ajax(opts);
       };
     } else {
