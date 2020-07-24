@@ -4,6 +4,7 @@ export default {
   name: "message-bus",
 
   initialize() {
+    const { MessageBus } = window;
     MessageBus.baseUrl = Discourse.longPollingBaseUrl.replace(/\/$/, "") + "/";
 
     if (MessageBus.baseUrl !== "/") {
