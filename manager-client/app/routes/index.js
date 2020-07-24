@@ -1,5 +1,6 @@
 import Repo from "manager-client/models/repo";
 import Route from "@ember/routing/route";
+import { htmlSafe } from "@ember/template";
 
 export default Route.extend({
   model() {
@@ -37,7 +38,13 @@ export default Route.extend({
         repo.get("branch") === "origin/master"
       ) {
         applicationController.appendBannerHtml(
-          "<b>WARNING:</b> Your Discourse is tracking the 'master' branch which may be unstable, <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>we recommend tracking the 'tests-passed' branch</a>."
+          htmlSafe(`
+            <b>WARNING:</b>
+            Your Discourse is tracking the 'master' branch which may be unstable,
+            <a href='https://meta.discourse.org/t/change-tracking-branch-for-your-discourse-instance/17014'>
+              we recommend tracking the 'tests-passed' branch
+            </a>.
+          `)
         );
       }
     });

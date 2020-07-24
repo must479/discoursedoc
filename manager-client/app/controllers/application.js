@@ -3,6 +3,8 @@ import Controller from "@ember/controller";
 import { computed } from "@ember/object";
 
 export default Controller.extend({
+  // banner = [];
+
   showBanner: computed("banner", "bannerDismissed", "banner.[]", function() {
     if (this.bannerDismissed) {
       return false;
