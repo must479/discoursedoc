@@ -11,7 +11,7 @@ export default Component.extend({
       scheduleOnce("afterRender", this, "_scrollBottom");
     }
   },
-  
+
   _scrollBottom() {
     this.$().scrollTop(this.$()[0].scrollHeight);
   }
