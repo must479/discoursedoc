@@ -15,10 +15,12 @@ export default Route.extend({
     if (Array.isArray(model)) {
       return Repo.findLatestAll().then(response => {
         JSON.parse(response).repos.forEach(_repo => {
-          const repo = model.find(repo => repo.get("path") === _repo.path);
+          const repo = model.findBy("path", _repo.path);
+
           if (!repo) {
             return;
           }
+
           delete _repo.path;
           repo.set("latest", EmberObject.create(_repo));
         });
