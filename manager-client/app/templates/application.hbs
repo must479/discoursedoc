@@ -1,20 +1,22 @@
 <div class="container">
   <div class="back-site">
-    <a href={{returnToSiteUrl}}>Return to site</a>
+    <a href={{this.returnToSiteUrl}}>Return to site</a>
   </div>
 
   <header class="container">
-    <LinkTo @route="index"><img src={{logoUrl}} class="logo"></LinkTo>
+    <LinkTo @route="index"><img src={{this.logoUrl}} class="logo" alt="Discourse"></LinkTo>
     <h1><LinkTo @route="index">Upgrade</LinkTo></h1>
   </header>
 
   <div class="container">
-
-    {{#if showBanner}}
+    {{#if this.showBanner}}
       <div id="banner">
         <div id="banner-content">
-          <div class="close" {{action "dismiss"}}><i class="fa fa-times" title="Dismiss this banner."></i></div>
-          {{#each banner as |row|}}
+          <a href="#" class="close" {{on "click" this.dismiss}}>
+            <i class="fa fa-times" title="Dismiss this banner."></i>
+          </a>
+
+          {{#each this.banner as |row|}}
             <p>{{row}}</p>
           {{/each}}
         </div>
@@ -25,11 +27,14 @@
       <LinkTo @route="index" @tagName="li" class="nav-item">
         <LinkTo @route="index" class="nav-link">Versions</LinkTo>
       </LinkTo>
+
       <LinkTo @route="processes" @tagName="li" class="nav-item">
         <LinkTo @route="processes" class="nav-link">Processes</LinkTo>
       </LinkTo>
 
-      <li class="nav-item"><a class="nav-link" href={{backupsUrl}}>Backups</a></li>
+      <li class="nav-item">
+        <a class="nav-link" href={{this.backupsUrl}}>Backups</a>
+      </li>
     </ul>
 
     {{outlet}}

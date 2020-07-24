@@ -1,20 +1,22 @@
-<button disabled={{upgradeAllButtonDisabled}} id="upgrade-all" class="btn" {{action "upgradeAllButton"}}>
-  {{#if allUpToDate}}
+<button type="button" disabled={{this.upgradeAllButtonDisabled}} id="upgrade-all" class="btn" {{on "click" this.upgradeAllButton}}>
+  {{#if this.allUpToDate}}
     All Up-to-date
   {{else}}
     Upgrade All
   {{/if}}
 </button>
 
-<table class='table' id='repos'>
-  <tr>
-    <th></th>
-    <th style='width: 50%'>Repository</th>
-    <th>Status</th>
-  </tr>
+<table class="table" id="repos">
+  <thead>
+    <tr>
+      <th></th>
+      <th style="width: 50%">Repository</th>
+      <th>Status</th>
+    </tr>
+  </thead>
   <tbody>
-    {{#each model as |repo|}}
-      <RepoStatus @repo={{repo}} @upgradingRepo={{upgrading}} @managerRepo={{managerRepo}} />
+    {{#each @model as |repo|}}
+      <RepoStatus @repo={{repo}} @upgradingRepo={{this.upgrading}} @managerRepo={{this.managerRepo}} />
     {{/each}}
   </tbody>
 </table>
