@@ -5,7 +5,7 @@ import { htmlSafe } from "@ember/template";
 export default buildHelper(function(params) {
   const [commitsBehind, oldSha, newSha, url] = params;
 
-  if (parseInt(commitsBehind) === 0) {
+  if (parseInt(commitsBehind, 10) === 0) {
     return "";
   }
 
