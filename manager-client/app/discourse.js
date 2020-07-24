@@ -1,6 +1,6 @@
 function init() {
   const data = document.getElementById("preloaded-data").dataset["preload"];
-  Object.assign(Discourse, data);
+  Object.assign(Discourse, JSON.parse(data));
 }
 
 const Discourse = {
