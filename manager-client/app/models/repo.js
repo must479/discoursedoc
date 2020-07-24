@@ -1,5 +1,5 @@
 import Discourse from "manager-client/discourse";
-import { default as EmberObject, computed } from "@ember/object";
+import EmberObject, { computed } from "@ember/object";
 import { or } from "@ember/object/computed";
 import { isNone } from "@ember/utils";
 import { Promise } from "rsvp";
