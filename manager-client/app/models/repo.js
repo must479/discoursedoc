@@ -43,7 +43,7 @@ const Repo = EmberObject.extend({
     args = args || {};
     args.data = this.getProperties("path", "version", "branch");
 
-    return Em.$.ajax(Discourse.getAppURL(url), args);
+    return $.ajax(Discourse.getAppURL(url), args);
   },
 
   findLatest() {
@@ -102,7 +102,7 @@ Repo.reopenClass({
         return resolve(loaded);
       }
 
-      Em.$.ajax(Discourse.getAppURL("/admin/docker/repos")).then(result => {
+      $.ajax(Discourse.getAppURL("/admin/docker/repos")).then(result => {
         loaded = result.repos.map(r => Repo.create(r));
         resolve(loaded);
       });
@@ -118,7 +118,7 @@ Repo.reopenClass({
   },
 
   upgradeAll() {
-    return Em.$.ajax(Discourse.getAppURL("/admin/docker/upgrade"), {
+    return $.ajax(Discourse.getAppURL("/admin/docker/upgrade"), {
       dataType: "text",
       type: "POST",
       data: { path: "all" }
@@ -126,7 +126,7 @@ Repo.reopenClass({
   },
 
   resetAll(repos) {
-    return Em.$.ajax(Discourse.getAppURL("/admin/docker/upgrade"), {
+    return $.ajax(Discourse.getAppURL("/admin/docker/upgrade"), {
       dataType: "text",
       type: "DELETE",
       data: { path: "all", version: concatVersions(repos) }
@@ -134,7 +134,7 @@ Repo.reopenClass({
   },
 
   findLatestAll() {
-    return Em.$.ajax(Discourse.getAppURL("/admin/docker/latest"), {
+    return $.ajax(Discourse.getAppURL("/admin/docker/latest"), {
       dataType: "text",
       type: "GET",
       data: { path: "all" }
@@ -142,7 +142,7 @@ Repo.reopenClass({
   },
 
   findAllProgress(repos) {
-    return Em.$.ajax(Discourse.getAppURL("/admin/docker/progress"), {
+    return $.ajax(Discourse.getAppURL("/admin/docker/progress"), {
       dataType: "text",
       type: "GET",
       data: { path: "all", version: concatVersions(repos) }

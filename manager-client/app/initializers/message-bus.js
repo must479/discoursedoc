@@ -13,7 +13,7 @@ export default {
         opts.headers["X-Shared-Session-Key"] = document.querySelector(
           "meta[name=shared_session_key]"
         ).getAttribute("content");
-        return Em.$.ajax(opts);
+        return $.ajax(opts);
       };
     } else {
       MessageBus.baseUrl = Discourse.getAppURL("/");
