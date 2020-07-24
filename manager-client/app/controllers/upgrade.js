@@ -19,7 +19,7 @@ export default Controller.extend({
     return this.get("model.length") !== 1;
   }),
 
-  title: computed("model.@each.name", function() {
+  title: computed("model.@each.name", "multiUpgrade", function() {
     return this.multiUpgrade ? "All" : this.model[0].get("name");
   }),
 
