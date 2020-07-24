@@ -1,4 +1,5 @@
 import EmberObject from "@ember/object";
+import $ from "jquery";
 import Discourse from "manager-client/discourse";
 
 const ProcessList = EmberObject.extend({

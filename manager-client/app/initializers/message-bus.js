@@ -1,3 +1,4 @@
+import $ from "jquery";
 import Discourse from "manager-client/discourse";
 
 export default {
