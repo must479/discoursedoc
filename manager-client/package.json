@@ -12,7 +12,9 @@
   "scripts": {
     "build": "ember build --environment=production",
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
-    "start": "ember server",
+    "lint:hbs": "ember-template-lint .",
+    "lint:js": "eslint .",
+    "start": "ember serve",
     "test": "npm-run-all lint:* test:*",
     "test:ember": "ember test"
   },
