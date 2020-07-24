@@ -2,7 +2,7 @@
 import Repo from "manager-client/models/repo";
 import Controller from "@ember/controller";
 import { equal } from "@ember/object/computed";
-import { computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 
 export default Controller.extend({
   output: null,
@@ -92,46 +92,46 @@ export default Controller.extend({
     this.setProperties({ output: "", status: null, percent: 0 });
   },
 
-  actions: {
-    start() {
-      this.reset();
+  @action
+  start() {
+    this.reset();
 
-      if (this.multiUpgrade) {
-        this.model
-          .filter(repo => !repo.get("upToDate"))
-          .forEach(repo => repo.set("upgrading", true));
-        return Repo.upgradeAll();
-      }
+    if (this.multiUpgrade) {
+      this.model
+        .filter(repo => !repo.get("upToDate"))
+        .forEach(repo => repo.set("upgrading", true));
+      return Repo.upgradeAll();
+    }
 
-      const repo = this.model[0];
-      if (repo.get("upgrading")) {
-        return;
-      }
-      repo.startUpgrade();
-    },
+    const repo = this.model[0];
+    if (repo.get("upgrading")) {
+      return;
+    }
+    repo.startUpgrade();
+  },
 
-    resetUpgrade() {
-      bootbox.confirm(
-        "WARNING: You should only reset upgrades that have failed and are not running.\n\n" +
-          "This will NOT cancel currently running builds and should only be used as a last resort.",
-        result => {
-          if (result) {
-            if (this.multiUpgrade) {
-              return Repo.resetAll(
-                this.model.filter(repo => !repo.get("upToDate"))
-              ).finally(() => {
-                this.reset();
-                this.updateAttribute("upgrading", false);
-              });
-            }
-
-            const repo = this.model[0];
-            repo.resetUpgrade().then(() => {
+  @action
+  resetUpgrade() {
+    bootbox.confirm(
+      "WARNING: You should only reset upgrades that have failed and are not running.\n\n" +
+        "This will NOT cancel currently running builds and should only be used as a last resort.",
+      result => {
+        if (result) {
+          if (this.multiUpgrade) {
+            return Repo.resetAll(
+              this.model.filter(repo => !repo.get("upToDate"))
+            ).finally(() => {
               this.reset();
+              this.updateAttribute("upgrading", false);
             });
           }
+
+          const repo = this.model[0];
+          repo.resetUpgrade().then(() => {
+            this.reset();
+          });
         }
-      );
-    }
+      }
+    );
   }
 });

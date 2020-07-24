@@ -1,6 +1,6 @@
 import Discourse from "manager-client/discourse";
 import Controller from "@ember/controller";
-import { computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 
 export default Controller.extend({
   // banner = [];
@@ -36,9 +36,8 @@ export default Controller.extend({
     return Discourse.getAppURL("/admin/backups");
   }),
 
-  actions: {
-    dismiss() {
-      this.set("bannerDismissed", true);
-    }
+  @action
+  dismiss() {
+    this.set("bannerDismissed", true);
   }
 });

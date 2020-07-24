@@ -1,5 +1,5 @@
 import Controller from "@ember/controller";
-import { computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 
 export default Controller.extend({
   managerRepo: null,
@@ -17,9 +17,8 @@ export default Controller.extend({
     return this.model.every(repo => repo.get("upToDate"));
   }),
 
-  actions: {
-    upgradeAllButton() {
-      this.replaceRoute("upgrade", "all");
-    }
+  @action
+  upgradeAllButton() {
+    this.replaceRoute("upgrade", "all");
   }
 });

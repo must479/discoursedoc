@@ -1,6 +1,6 @@
 import Discourse from "manager-client/discourse";
 import Component from "@ember/component";
-import { computed } from "@ember/object";
+import { action, computed } from "@ember/object";
 import { inject as service } from "@ember/service";
 
 export default Component.extend({
@@ -35,9 +35,8 @@ export default Component.extend({
     );
   }),
 
-  actions: {
-    upgrade() {
-      this.router.transitionTo("upgrade", this.repo);
-    }
+  @action
+  upgrade() {
+    this.router.transitionTo("upgrade", this.repo);
   }
 });
