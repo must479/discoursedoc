@@ -1,6 +1,6 @@
 <h3>Upgrade {{title}}</h3>
 
-{{progress-bar percent=percent}}
+<ProgressBar @percent={{percent}} />
 
 {{#if complete}}
   <p>Upgrade completed successfully!</p>
@@ -25,4 +25,4 @@
   </div>
 {{/if}}
 
-{{x-console output=output followOutput=true}}
+<XConsole @output={{output}} @followOutput={{true}} />

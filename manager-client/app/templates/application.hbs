@@ -4,8 +4,8 @@
   </div>
 
   <header class="container">
-    {{#link-to 'index'}}<img src={{logoUrl}} class="logo">{{/link-to}}
-    <h1>{{#link-to 'index'}}Upgrade{{/link-to}}</h1>
+    <LinkTo @route="index"><img src={{logoUrl}} class="logo"></LinkTo>
+    <h1><LinkTo @route="index">Upgrade</LinkTo></h1>
   </header>
 
   <div class="container">
@@ -22,12 +22,12 @@
     {{/if}}
 
     <ul class="nav nav-tabs">
-      {{#link-to "index" tagName="li" class="nav-item"}}
-        {{#link-to "index" class="nav-link"}}Versions{{/link-to}}
-      {{/link-to}}
-      {{#link-to "processes" tagName="li" class="nav-item"}}
-        {{#link-to "processes" class="nav-link"}}Processes{{/link-to}}
-      {{/link-to}}
+      <LinkTo @route="index" @tagName="li" class="nav-item">
+        <LinkTo @route="index" class="nav-link">Versions</LinkTo>
+      </LinkTo>
+      <LinkTo @route="processes" @tagName="li" class="nav-item">
+        <LinkTo @route="processes" class="nav-link">Processes</LinkTo>
+      </LinkTo>
 
       <li class="nav-item"><a class="nav-link" href={{backupsUrl}}>Backups</a></li>
     </ul>
