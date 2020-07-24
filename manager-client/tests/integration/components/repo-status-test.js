@@ -50,22 +50,10 @@ module("Integration | Component | repo-status", function(hooks) {
     this.set("managerRepo", managerRepo);
     await render(hbs`{{repo-status repo=repo managerRepo=managerRepo}}`);
 
-    assert.equal(
-      find("span.current.commit-hash").textContent.trim(),
-      "v2.2.0.beta6 +98",
-      "tag version is used when present"
-    );
-    assert.equal(
-      find("span.new.commit-hash").textContent.trim(),
-      "v2.2.0.beta6 +101",
-      "tag version is used when present"
-    );
+    assert.dom("span.current.commit-hash").hasText('v2.2.0.beta6 +98', "tag version is used when present");
+    assert.dom("span.new.commit-hash").hasText('v2.2.0.beta6 +101', "tag version is used when present");
 
-    assert.equal(
-      find("li.new-commits a").textContent.trim(),
-      "3 new commits",
-      "shows number of new commits"
-    );
+    assert.dom("li.new-commits a").hasText('3 new commits', "shows number of new commits");
     assert.equal(
       find("li.new-commits a").href.trim(),
       "https://github.com/discourse/discourse/compare/8f65e4f...2b006c0",
@@ -75,16 +63,8 @@ module("Integration | Component | repo-status", function(hooks) {
     this.set("repo.pretty_version", null);
     this.set("repo.latest.pretty_version", null);
 
-    assert.equal(
-      find("span.current.commit-hash").textContent.trim(),
-      "8f65e4f",
-      "commit hash is used when tag version is absent"
-    );
-    assert.equal(
-      find("span.new.commit-hash").textContent.trim(),
-      "2b006c0",
-      "commit hash is used when tag version is absent"
-    );
+    assert.dom("span.current.commit-hash").hasText('8f65e4f', "commit hash is used when tag version is absent");
+    assert.dom("span.new.commit-hash").hasText('2b006c0', "commit hash is used when tag version is absent");
 
     assert
       .dom("img.check-circle")
@@ -98,17 +78,9 @@ module("Integration | Component | repo-status", function(hooks) {
       .dom("button.upgrade-button")
       .exists("upgrade button is visibile when plugin is out-of-date");
 
-    assert.equal(
-      find("button.upgrade-button").disabled,
-      false,
-      "upgrade button is not disabled when docker_manager repo is up-to-date"
-    );
+    assert.dom("button.upgrade-button").isNotDisabled("upgrade button is not disabled when docker_manager repo is up-to-date");
     this.set("managerRepo.upToDate", false);
-    assert.equal(
-      find("button.upgrade-button").disabled,
-      true,
-      "upgrade button is disabled when docker_manager repo is out-of-date"
-    );
+    assert.dom("button.upgrade-button").isDisabled("upgrade button is disabled when docker_manager repo is out-of-date");
 
     this.set("repo.latest.commits_behind", 0);
     this.set("repo.version", "2b006c0");
