@@ -15,16 +15,11 @@ const Repo = EmberObject.extend({
   checking: false,
 
   checkingStatus: or("unloaded", "checking"),
+  prettyVersion: computed.or("pretty_version", "version"),
+  prettyLatestVersion: computed.or("latest.pretty_version", "latest.version"),
+
   upToDate: computed("upgrading", "version", "latest.version", function() {
     return !this.upgrading && this.version === this.get("latest.version");
-  }),
-
-  prettyVersion: computed("version", "pretty_version", function() {
-    return this.pretty_version || this.version;
-  }),
-
-  prettyLatestVersion: computed("latest.{version,pretty_version}", function() {
-    return this.get("latest.pretty_version") || this.get("latest.version");
   }),
 
   get shouldCheck() {
