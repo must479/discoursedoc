@@ -7,7 +7,7 @@ export default Component.extend({
   didReceiveAttrs() {
     this._super(...arguments);
 
-    if (this.get("followOutput")) {
+    if (this.followOutput) {
       scheduleOnce("afterRender", this, "_scrollBottom");
     }
   },

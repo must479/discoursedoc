@@ -16,14 +16,12 @@ const Repo = EmberObject.extend({
 
   checkingStatus: or("unloaded", "checking"),
   upToDate: computed("upgrading", "version", "latest.version", function() {
-    return (
-      !this.get("upgrading") &
-      (this.get("version") === this.get("latest.version"))
-    );
+    return !this.upgrading &
+    (this.version === this.get("latest.version"));
   }),
 
   prettyVersion: computed("version", "pretty_version", function() {
-    return this.get("pretty_version") || this.get("version");
+    return this.pretty_version || this.version;
   }),
 
   prettyLatestVersion: computed("latest.{version,pretty_version}", function() {
@@ -31,15 +29,15 @@ const Repo = EmberObject.extend({
   }),
 
   get shouldCheck() {
-    if (isNone(this.get("version"))) {
+    if (isNone(this.version)) {
       return false;
     }
-    if (this.get("checking")) {
+    if (this.checking) {
       return false;
     }
 
     // Only check once every minute
-    const lastCheckedAt = this.get("lastCheckedAt");
+    const lastCheckedAt = this.lastCheckedAt;
     if (lastCheckedAt) {
       const ago = new Date().getTime() - lastCheckedAt;
       return ago > 60 * 1000;
@@ -56,7 +54,7 @@ const Repo = EmberObject.extend({
 
   findLatest() {
     return new Promise(resolve => {
-      if (!this.get("shouldCheck")) {
+      if (!this.shouldCheck) {
         this.set("unloaded", false);
         return resolve();
       }

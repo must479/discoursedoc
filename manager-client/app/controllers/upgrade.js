@@ -20,24 +20,24 @@ export default Controller.extend({
   }),
 
   title: computed("model.@each.name", function() {
-    return this.get("multiUpgrade") ? "All" : this.get("model")[0].get("name");
+    return this.multiUpgrade ? "All" : this.model[0].get("name");
   }),
 
   isUpToDate: computed("model.@each.upToDate", function() {
-    return this.get("model").every(repo => repo.get("upToDate"));
+    return this.model.every(repo => repo.get("upToDate"));
   }),
 
   upgrading: computed("model.@each.upgrading", function() {
-    return this.get("model").some(repo => repo.get("upgrading"));
+    return this.model.some(repo => repo.get("upgrading"));
   }),
 
   repos() {
-    const model = this.get("model");
-    return this.get("isMultiple") ? model : [model];
+    const model = this.model;
+    return this.isMultiple ? model : [model];
   },
 
   updateAttribute(key, value, valueIsKey = false) {
-    this.get("model").forEach(repo => {
+    this.model.forEach(repo => {
       value = valueIsKey ? repo.get(value) : value;
       repo.set(key, value);
     });
@@ -46,7 +46,7 @@ export default Controller.extend({
   messageReceived(msg) {
     switch (msg.type) {
       case "log":
-        this.set("output", this.get("output") + msg.value + "\n");
+        this.set("output", this.output + msg.value + "\n");
         break;
       case "percent":
         this.set("percent", msg.value);
@@ -55,7 +55,7 @@ export default Controller.extend({
         this.set("status", msg.value);
 
         if (msg.value === "complete") {
-          this.get("model")
+          this.model
             .filter(repo => repo.get("upgrading"))
             .forEach(repo => {
               repo.set("version", repo.get("latest.version"));
@@ -71,7 +71,7 @@ export default Controller.extend({
   },
 
   upgradeButtonText: computed("upgrading", function() {
-    if (this.get("upgrading")) {
+    if (this.upgrading) {
       return "Upgrading...";
     } else {
       return "Start Upgrading";
@@ -96,14 +96,14 @@ export default Controller.extend({
     start() {
       this.reset();
 
-      if (this.get("multiUpgrade")) {
-        this.get("model")
+      if (this.multiUpgrade) {
+        this.model
           .filter(repo => !repo.get("upToDate"))
           .forEach(repo => repo.set("upgrading", true));
         return Repo.upgradeAll();
       }
 
-      const repo = this.get("model")[0];
+      const repo = this.model[0];
       if (repo.get("upgrading")) {
         return;
       }
@@ -116,16 +116,16 @@ export default Controller.extend({
           "This will NOT cancel currently running builds and should only be used as a last resort.",
         result => {
           if (result) {
-            if (this.get("multiUpgrade")) {
+            if (this.multiUpgrade) {
               return Repo.resetAll(
-                this.get("model").filter(repo => !repo.get("upToDate"))
+                this.model.filter(repo => !repo.get("upToDate"))
               ).finally(() => {
                 this.reset();
                 this.updateAttribute("upgrading", false);
               });
             }
 
-            const repo = this.get("model")[0];
+            const repo = this.model[0];
             repo.resetUpgrade().then(() => {
               this.reset();
             });

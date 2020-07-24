@@ -4,16 +4,16 @@ import { computed } from "@ember/object";
 
 export default Controller.extend({
   showBanner: computed("banner", "bannerDismissed", "banner.[]", function() {
-    if (this.get("bannerDismissed")) {
+    if (this.bannerDismissed) {
       return false;
     }
 
-    const banner = this.get("banner");
+    const banner = this.banner;
     return banner && banner.length > 0;
   }),
 
   appendBannerHtml(html) {
-    const banner = this.get("banner") || [];
+    const banner = this.banner || [];
     if (banner.indexOf(html) === -1) {
       banner.pushObject(html);
     }

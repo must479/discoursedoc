@@ -13,14 +13,14 @@ export default Component.extend({
     "managerRepo",
     "managerRepo.upToDate",
     function() {
-      const upgradingRepo = this.get("upgradingRepo");
+      const upgradingRepo = this.upgradingRepo;
 
       if (!upgradingRepo) {
-        const managerRepo = this.get("managerRepo");
+        const managerRepo = this.managerRepo;
         if (!managerRepo) {
           return false;
         }
-        return !managerRepo.get("upToDate") && managerRepo !== this.get("repo");
+        return !managerRepo.get("upToDate") && managerRepo !== this.repo;
       }
       return true;
     }
@@ -37,7 +37,7 @@ export default Component.extend({
 
   actions: {
     upgrade() {
-      this.get("router").transitionTo("upgrade", this.get("repo"));
+      this.router.transitionTo("upgrade", this.repo);
     }
   }
 });

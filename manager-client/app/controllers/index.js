@@ -9,12 +9,12 @@ export default Controller.extend({
     "managerRepo.upToDate",
     "allUpToDate",
     function() {
-      return !this.get("managerRepo.upToDate") || this.get("allUpToDate");
+      return !this.get("managerRepo.upToDate") || this.allUpToDate;
     }
   ),
 
   allUpToDate: computed("model.@each.upToDate", function() {
-    return this.get("model").every(repo => repo.get("upToDate"));
+    return this.model.every(repo => repo.get("upToDate"));
   }),
 
   actions: {

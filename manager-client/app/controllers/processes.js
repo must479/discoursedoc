@@ -11,8 +11,8 @@ export default Controller.extend({
   },
 
   performRefresh() {
-    if (this.get("autoRefresh")) {
-      this.get("model").refresh();
+    if (this.autoRefresh) {
+      this.model.refresh();
     }
   }
 });
